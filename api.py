@@ -1,4 +1,4 @@
-# pylint: disable=C0114,C0115,C0116,C0301,C0103,R0903,W0402,W0703,E1133
+# pylint: disable=C0114,C0115,C0116,C0301,C0103,E0401,R0903,W0402,W0703,E1133
 
 from abc import ABC, abstractmethod
 import json
@@ -137,7 +137,7 @@ class ClientIDsField(BaseField):
 
 
 class RequestMeta(type):
-    def __new__(cls, name, bases, dct):
+    def __new__(mcs, name, bases, dct):
         renewed = dct.copy()
         renewed['_fields'] = {}
         for key, value in dct.items():
@@ -147,7 +147,7 @@ class RequestMeta(type):
                 # print(value)
                 del renewed[key]
         # print(renewed)
-        return super().__new__(cls, name, bases, renewed)
+        return super().__new__(mcs, name, bases, renewed)
 
 
 class BaseRequest(metaclass=RequestMeta):
